@@ -34,7 +34,7 @@ var config     = require('config');
 var CheckEvent = require('../../models/checkEvent');
 
 
-exports.init = function() {
+exports.initWebApp = function() {
   CheckEvent.on('afterInsert', function(checkEvent) {
     var webhooks = config.webhooks;
     var hrefs = webhooks.event[checkEvent.message];
