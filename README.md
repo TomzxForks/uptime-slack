@@ -11,13 +11,13 @@ To use this plugin, first install it using npm while in the Uptime directory:
 $ npm install uptime-slack
 ```
 
-Then to enable it, add it to the `plugins/index.js`, as follows:
+Then to enable it, add it to the `config/production.js`, as follows:
 
 ```js
-// in plugins/index.js
-exports.init = function() {
-  require('uptime-slack').init();
-}
+...
+plugins:
+  ...
+  - ./node_modules/uptime-slack
 ```
 
 Customize the plugin settings in the `config/production.yaml` configuration file, as in the example below:
@@ -26,13 +26,13 @@ Customize the plugin settings in the `config/production.yaml` configuration file
 webhooks:
   event:
     up:
-      - 'https://xxxx.slack.com/services/hooks/incoming-webhook?token=xxxxxx'
+      - 'https://hooks.slack.com/services/ABC/DEF/GHI'
     down:
-      - 'https://xxxx.slack.com/services/hooks/incoming-webhook?token=xxxxxx'
+      - 'https://hooks.slack.com/services/ABC/DEF/GHI'
     paused:
-      - 'https://xxxx.slack.com/services/hooks/incoming-webhook?token=xxxxxx'
+      - 'https://hooks.slack.com/services/ABC/DEF/GHI'
     restarted:
-      - 'https://xxxx.slack.com/services/hooks/incoming-webhook?token=xxxxxx'
+      - 'https://hooks.slack.com/services/ABC/DEF/GHI'
   dashboardUrl: 'http://uptime.example.com'
   channel:      '#slack-channel'
   username:     'uptime'
