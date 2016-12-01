@@ -33,6 +33,10 @@ var util       = require('util');
 var config     = require('config');
 var CheckEvent = require('../../models/checkEvent');
 
+var colors = {
+  up: '#2fa44f',
+  down: '#d50200',
+};
 
 exports.initWebApp = function() {
   CheckEvent.on('afterInsert', function(checkEvent) {
@@ -45,8 +49,18 @@ exports.initWebApp = function() {
         if (err) return console.error(err);
         payload.channel     = webhooks.channel;
         payload.username    = webhooks.username;
-        payload.text        = '<' + webhooks.dashboardUrl + '/dashboard/checks/' + check._id + '?type=hour&date=' + checkEvent.timestamp.valueOf() + '|' + check.name +'>' + ' ' + checkEvent.message;
         payload.icon_emoji  = webhooks.icon_emoji;
+
+        var attachment = {};
+        attachment.text        = '<' + webhooks.dashboardUrl + '/dashboard/checks/' + check._id + '?type=hour&date=' + checkEvent.timestamp.valueOf() + '|' + check.name +'>' + ' ' + checkEvent.message;
+
+        if (checkEvent.details) {
+            attachment.text += ' - ' + checkEvent.details;
+        }
+
+        attachment.color = colors[checkEvent.message];
+
+        payload.attachments = [attachment];
 
         hrefs.forEach(function(href) {
             var options = url.parse(href);
